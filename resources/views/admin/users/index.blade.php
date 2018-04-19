@@ -2,6 +2,16 @@
 
 @section('content')
 
+    @if(Session::has('deleted_user'))
+        <div class="alert alert-danger">{{session('deleted_user')}}</div>
+    @endif
+    @if(Session::has('user_created'))
+        <div class="alert alert-success">{{session('user_created')}}</div>
+    @endif
+    @if(Session::has('user_updated'))
+        <div class="alert alert-info">{{session('user_updated')}}</div>
+    @endif
+
     <h1>Users</h1>
 
     <table class="table">
@@ -22,7 +32,7 @@
             @foreach($users as $user)
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td><img src="{{$user->photo? $user->photo->file : '/images/placeholder.png'}}" height="50px" width="50px"></td>
+                    <td><img src="{{$user->photo? $user->photo->name : '/images/placeholder.png'}}" height="50px" width="50px"></td>
                     <td><a href="{{route('users.edit', $user->id)}}">{{$user->name}}</a></td>
                     <td>{{$user->email}}</td>
                     @if($user->role)

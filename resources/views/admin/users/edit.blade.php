@@ -5,7 +5,7 @@
 
     <div class="row">
         <div class="col-sm-3">
-            <img src="{{$user->photo? $user->photo->file: '/images/placeholder.png'}}" alt="" class="img-responsive img-rounded">
+            <img src="{{$user->photo? $user->photo->name: '/images/placeholder.png'}}" alt="" class="img-responsive img-rounded">
         </div>
 
         <div class="col-sm-9">
@@ -41,10 +41,16 @@
                 {!! Form::password('password', ['class'=>'form-control']) !!}
             </div>
 
-            <div class="form-group">
-                {!! Form::submit('Create Post', ['class'=>'btn btn-primary']) !!}
+            <div class="form-group col-sm-1">
+                {!! Form::submit('Update', ['class'=>'btn btn-primary']) !!}
             </div>
 
+            {!! Form::close() !!}
+
+            {!! Form::open(['method' => 'DELETE', 'action' => ['AdminUsersController@destroy', $user->id], 'class' => 'col-sm-1', 'style' => 'padding-left: 2em;']) !!}
+                <div class="form-group">
+                    {!! Form::submit('Delete User', ['class' => 'btn btn-danger']) !!}
+                </div>
             {!! Form::close() !!}
         </div>
     </div>

@@ -8,6 +8,7 @@ use App\Photo;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUsersController extends Controller
 {
@@ -51,13 +52,15 @@ class AdminUsersController extends Controller
             $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
 
-            $photo = Photo::create(['file' => $name]);
+            $photo = Photo::create(['name' => $name]);
             $input['photo_id'] = $photo->id;
         }
 
         $input['password'] = bcrypt($input['password']);
 
         User::create($input);
+
+        session()->flash('user_created', 'The user has been created successfully.');
 
         return redirect('/admin/users');
     }
@@ -107,11 +110,12 @@ class AdminUsersController extends Controller
             $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
 
-            $photo = Photo::create(['file' => $name]);
+            $photo = Photo::create(['name' => $name]);
             $input['photo_id'] = $photo->id;
         }
 
         $user->update($input);
+        session()->flash('user_updated', 'The user with id ' . $id . ' has been edited successfully.');
         return redirect(route('users.index'));
 
 
@@ -125,6 +129,15 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        if (Auth::user()->id != $user->id) {
+            unlink(public_path() . $user->photo->name);
+            $user->delete();
+            session()->flash('deleted_user', 'The user with id ' . $id . ' has been deleted.');
+        }
+
+
+
+        return redirect(route('users.index'));
     }
 }
