@@ -350,12 +350,7 @@
 <script src="{{asset('js/jquery.js')}}"></script>
 <script src="{{asset('js/libs.js')}}"></script>
 
-
 @yield('footer')
-
-
-
-
 
 </body>
 
