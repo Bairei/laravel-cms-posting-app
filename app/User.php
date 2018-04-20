@@ -27,15 +27,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo('App\Role');
     }
 
-    public function photo() {
+    public function photo()
+    {
         return $this->belongsTo('App\Photo');
     }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->role->name == 'Administrator' && $this->is_active == 1;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
     }
 }
