@@ -131,7 +131,9 @@ class AdminUsersController extends Controller
     {
         $user = User::findOrFail($id);
         if (Auth::user()->id != $user->id) {
-            unlink(public_path() . $user->photo->name);
+            if($user->photo){
+                unlink(public_path() . $user->photo->name);
+            }
             $user->delete();
             session()->flash('deleted_user', 'The user with id ' . $id . ' has been deleted.');
         }

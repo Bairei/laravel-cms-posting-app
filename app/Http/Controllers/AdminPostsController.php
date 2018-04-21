@@ -56,7 +56,7 @@ class AdminPostsController extends Controller
         }
 
         $user->posts()->create($input);
-
+        session()->flash('created_post', 'New post has been created.');
         return redirect(route('posts.index'));
     }
 
@@ -79,7 +79,11 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $categories = Category::pluck('name', 'id')->all();
+
+        session()->flash('edited_post', 'Post with id ' .$id. ' has been edited.');
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -89,9 +93,18 @@ class AdminPostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostsCreateRequest $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $input = $request->all();
+        if ($file = $request->file('photo_id')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['name' => $name]);
+            $input['photo_id'] = $photo->id;
+        }
+        $post->update($input);
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -102,6 +115,12 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if ($post->photo) {
+            unlink(public_path() . $post->photo->name);
+        }
+        $post->delete();
+        session()->flash('deleted_post', 'Post with id ' .$id. ' has been deleted.');
+        return redirect(route('posts.index'));
     }
 }
