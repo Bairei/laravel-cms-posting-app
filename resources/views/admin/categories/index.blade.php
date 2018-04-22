@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('includes.flash_messages')
+
     <h1>Categories</h1>
 
         <div class="col-sm-6">

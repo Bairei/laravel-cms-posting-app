@@ -60,7 +60,7 @@ class AdminUsersController extends Controller
 
         User::create($input);
 
-        session()->flash('user_created', 'The user has been created successfully.');
+        session()->flash('created', 'The user has been created successfully.');
 
         return redirect('/admin/users');
     }
@@ -115,7 +115,7 @@ class AdminUsersController extends Controller
         }
 
         $user->update($input);
-        session()->flash('user_updated', 'The user with id ' . $id . ' has been edited successfully.');
+        session()->flash('edited', 'The user with id ' . $id . ' has been edited successfully.');
         return redirect(route('users.index'));
 
 
@@ -135,7 +135,7 @@ class AdminUsersController extends Controller
                 unlink(public_path() . $user->photo->name);
             }
             $user->delete();
-            session()->flash('deleted_user', 'The user with id ' . $id . ' has been deleted.');
+            session()->flash('deleted', 'The user with id ' . $id . ' has been deleted.');
         }
 
 

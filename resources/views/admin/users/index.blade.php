@@ -2,15 +2,7 @@
 
 @section('content')
 
-    @if(Session::has('deleted_user'))
-        <div class="alert alert-danger">{{session('deleted_user')}}</div>
-    @endif
-    @if(Session::has('user_created'))
-        <div class="alert alert-success">{{session('user_created')}}</div>
-    @endif
-    @if(Session::has('user_updated'))
-        <div class="alert alert-info">{{session('user_updated')}}</div>
-    @endif
+    @include('includes.flash_messages')
 
     <h1>Users</h1>
 

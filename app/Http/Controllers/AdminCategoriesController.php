@@ -38,6 +38,7 @@ class AdminCategoriesController extends Controller
     public function store(CategoriesRequest $request)
     {
         Category::create($request->all());
+        session()->flash('created', 'Category with id ' .$id. ' has been created.');
         return redirect(route('categories.index'));
     }
 
@@ -75,6 +76,7 @@ class AdminCategoriesController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->update($request->all());
+        session()->flash('edited', 'Category with id ' .$id. ' has been updated.');
         return redirect(route('categories.index'));
     }
 
@@ -87,6 +89,7 @@ class AdminCategoriesController extends Controller
     public function destroy($id)
     {
         Category::findOrFail($id)->delete();
+        session()->flash('deleted', 'Category with id ' .$id. ' has been deleted.');
         return redirect(route('categories.index'));
     }
 }

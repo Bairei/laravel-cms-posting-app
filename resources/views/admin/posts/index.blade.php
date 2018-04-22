@@ -2,15 +2,7 @@
 
 @section('content')
 
-    @if(Session::has('deleted_post'))
-        <div class="alert alert-danger">{{session('deleted_post')}}</div>
-    @endif
-    @if(Session::has('created_post'))
-        <div class="alert alert-success">{{session('created_post')}}</div>
-    @endif
-    @if(Session::has('edited_post'))
-        <div class="alert alert-info">{{session('updated_post')}}</div>
-    @endif
+    @include('includes.flash_messages')
 
     <h1>Posts</h1>
 
@@ -25,6 +17,8 @@
                 <th>Body</th>
                 <th>Created</th>
                 <th>Updated</th>
+                <th>Details</th>
+                <th>Comments</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +34,8 @@
                         <td>{{str_limit($post->body, 30)}}</td>
                         <td>{{$post->created_at->diffForHumans()}}</td>
                         <td>{{$post->updated_at->diffForHumans()}}</td>
+                        <td><a href="{{route('home.post', $post->id)}}">View Post</a></td>
+                        <td><a href="{{route('comments.showForPost', $post->id)}}">Comments</a></td>
                     </tr>
                 @endforeach
             @endif
