@@ -27,7 +27,7 @@
                     <td>{{$reply->email}}</td>
                     <td>{{str_limit($reply->body,30)}}</td>
                     <td>{{$reply->created_at}}</td>
-                    <td><a href="{{route('home.post', $reply->comment->post->id)}}">View Post</a></td>
+                    <td><a href="{{route('home.post', $reply->comment->post->slug)}}">View Post</a></td>
 
                     <td>
                         <div class="row">
@@ -65,6 +65,12 @@
             @endforeach
             </tbody>
         </table>
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-5">
+                {{$replies->links()}}
+            </div>
+        </div>
 
     @else
         <h1 class="text-center">No Replies</h1>

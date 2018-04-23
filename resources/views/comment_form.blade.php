@@ -13,7 +13,7 @@
                 {!! Form::textarea('body', null, ['class'=>'form-control', 'rows'=>3]) !!}
             </div>
             <div class="form-group">
-                {!! Form::submit('Reply', ['class'=>'btn btn-primary']) !!}
+                {!! Form::submit('Reply', ['class'=>'btn btm-sm btn-primary']) !!}
             </div>
 
             {!! Form::close() !!}

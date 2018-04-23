@@ -28,7 +28,7 @@
                         <td>{{$comment->email}}</td>
                         <td>{{str_limit($comment->body,30)}} <a href="{{route('comments.show', $comment->id)}}">More</a></td>
                         <td>{{$comment->created_at}}</td>
-                        <td><a href="{{route('home.post', $comment->post->id)}}">View Post</a></td>
+                        <td><a href="{{route('home.post', $comment->post->slug)}}">View Post</a></td>
                         <td><a href="{{route('replies.show', $comment->id)}}">View Replies</a></td>
 
                         <td>
@@ -67,6 +67,12 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-5">
+                {{$comments->links()}}
+            </div>
+        </div>
 
     @else
         <h1 class="text-center">No comments</h1>

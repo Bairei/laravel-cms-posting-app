@@ -16,7 +16,7 @@ class PostCommentsController extends Controller
      */
     public function index()
     {
-        $comments = Comment::all();
+        $comments = Comment::paginate(10);
         return view('admin.comments.index', compact('comments'));
     }
 
@@ -60,7 +60,7 @@ class PostCommentsController extends Controller
      */
     public function show($id)
     {
-        $comment = Comment::findOrFail($id);
+        $comment = Comment::findOrFail($id)->paginate(10);
         return view('admin.comments.show', compact('comment'));
     }
 
@@ -104,7 +104,7 @@ class PostCommentsController extends Controller
 
     public function showForPost($id)
     {
-        $comments = Post::findOrFail($id)->comments;
+        $comments = Post::findOrFail($id)->comments()->paginate(10);
         return view('admin.comments.index', compact('comments'));
     }
 }
